@@ -2,9 +2,9 @@
 
 
 __description__ = 'nmap xml script output parser'
-__author__ = 'Didier Stevens, modify by Sumedt Jitpukdebodin'
-__version__ = '0.2'
-__date__ = '2014/04/30'
+__author__ = 'Didier Stevens, modify by Sumedt Jitpukdebodin, modify by @Freakazoidile'
+__version__ = '0.3'
+__date__ = '2017/07/05'
 
 import optparse
 import xml.dom.minidom
@@ -69,39 +69,38 @@ def NmapXmlParser(filenames, options):
         domNmap = xml.dom.minidom.parse(open(filename, 'r'))
 
 #### Add date
-	nmap_header = domNmap.getElementsByTagName('nmaprun')
-	date = [nmap_header[0].getAttribute('startstr')]
+        nmap_header = domNmap.getElementsByTagName('nmaprun')
+        date = [nmap_header[0].getAttribute('startstr')]
 
 #### Add end date
-	nmap_footer = domNmap.getElementsByTagName('runstats')
-	enddate = [enddate.getAttribute('timestr') for enddate in nmap_footer[0].getElementsByTagName('finished')]
+        nmap_footer = domNmap.getElementsByTagName('runstats')
+        enddate = [enddate.getAttribute('timestr') for enddate in nmap_footer[0].getElementsByTagName('finished')]
 
         for hosttag in domNmap.getElementsByTagName('host'):
-
             for port in hosttag.getElementsByTagName('port'):
             	scriptFound = False
             	row = ['|'.join(date)]
             	addresses = [address.getAttribute('addr') for address in hosttag.getElementsByTagName('address') if address.getAttribute('addrtype') == 'ipv4']
             	#row = ['|'.join(addresses)]
-            	row.append('|'.join(enddate))
-            	row.append('|'.join(addresses))
-            	vendors = [address.getAttribute('vendor') for address in hosttag.getElementsByTagName('address') if address.getAttribute('addrtype') == 'mac']
-            	row.append('|'.join(vendors))
+                row.append('|'.join(enddate))
+                row.append('|'.join(addresses))
+                vendors = [address.getAttribute('vendor') for address in hosttag.getElementsByTagName('address') if address.getAttribute('addrtype') == 'mac']
+                row.append('|'.join(vendors))
 		### Remove all hostname(user,ptr) to be just user type only.
             	# hostnames = [hostname.getAttribute('name') for hostname in hosttag.getElementsByTagName('hostname')]
-            	hostnames = [hostname.getAttribute('name') for hostname in hosttag.getElementsByTagName('hostname')] # if hostname.getAttribute('type') == 'user']
-            	row.append('|'.join(hostnames))
-		row.append(port.getAttribute('portid'))
-		for state in port.getElementsByTagName('state'):
+                hostnames = [hostname.getAttribute('name') for hostname in hosttag.getElementsByTagName('hostname')  if hostname.getAttribute('type') == 'user']
+                row.append('|'.join(hostnames))
+                row.append(port.getAttribute('portid'))
+                for state in port.getElementsByTagName('state'):
 			row.append(state.getAttribute('state'))
-		for service in port.getElementsByTagName('service'):
+                for service in port.getElementsByTagName('service'):
 			row.append(service.getAttribute('name'))
-            if hosttag.getElementsByTagName('script'):
-                scriptFound = True
-                for script in hosttag.getElementsByTagName('script'):
-                    row.append(script.getAttribute('id'))
-                    row.append(repr(script.getAttribute('output').encode('ascii').replace('\n  ','')))
-            oOuput.Row(row)
+		if port.getElementsByTagName('script'):
+			scriptFound = True
+			for script in port.getElementsByTagName('script'):
+				row.append(script.getAttribute('id'))
+				row.append(repr(script.getAttribute('output').encode('ascii').replace('\n  ','')))
+		oOuput.Row(row)
     oOuput.Close()
 
 def File2Strings(filename):
