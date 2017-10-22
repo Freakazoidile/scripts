@@ -4,7 +4,7 @@
 __description__ = 'nmap xml script output parser'
 __author__ = 'Didier Stevens, modify by Sumedt Jitpukdebodin, modify by @Freakazoidile'
 __version__ = '0.3'
-__date__ = '2017/07/05'
+__date__ = '2017/10/21'
 
 import optparse
 import xml.dom.minidom
