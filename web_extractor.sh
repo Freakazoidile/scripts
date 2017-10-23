@@ -22,7 +22,7 @@ while read i; do
 
 	for x in $(echo $ports); do
 		port="$(echo $x | cut -d '/' -f 1| cut -d '.' -f2)"
-		if [[ -z "$ip" ]] || [[ $port == "3389" || $x == *"HTTPAPI" ]]; then
+		if [[ -z "$ip" ]] || [[ $port == "3389" || $x == *"HTTPAPI"* ]]; then
 			continue
 		fi
 
