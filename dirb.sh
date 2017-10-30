@@ -3,7 +3,7 @@
 # Takes script takes the output of web_extractor.sh file as input, http_extracted and https_extracted and runs dirb.
 # Update: Removed multithreading. did not work well. 
 # Todo: Revisit multithreading.
-set -m #enable JOB control
+#set -m #enable JOB control
 
 for i in $(cat http_extracted.txt); do
 	#while [ `jobs | wc -l` -ge 5 ]; do
