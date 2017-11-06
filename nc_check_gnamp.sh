@@ -24,7 +24,7 @@ while read i; do
 		
 	for x in $(echo $ports); do
 		echo "======================="
-		echo $ip
+		echo $ip $x
 		echo "======================="
 		echo $payload | nc -w 10 $ip $x 	
 		echo ""
