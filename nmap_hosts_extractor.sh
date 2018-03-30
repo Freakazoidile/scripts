@@ -3,7 +3,7 @@
 if [[ $# -eq 0 ]]; then
         echo 'Takes a gnmap file as input, and extracts common ports and puts each ip into separate files by common service name.'
         echo ''
-        echo '"smb_extractor.sh nmap.gnmap"'
+        echo '"./nmap_hosts_extractor.sh nmap.gnmap"'
         exit
 fi
 
@@ -82,20 +82,19 @@ while read i; do
 	done
 done< nmap_extractor_result
 
-rm nmap_extractor_result
 
-echo '=============' | tee -a nmap_extractor_result.txt
-echo 'Stats' | tee -a nmap_extractor_result.txt
-echo '=============' | tee -a nmap_extractor_result.txt
-echo 'ftp hosts: '$ftpCount | tee -a nmap_extractor_result.txt
-echo 'ssh hosts: '$sshCount | tee -a nmap_extractor_result.txt
-echo 'telnet hosts: '$telnetCount | tee -a nmap_extractor_result.txt
-echo 'smtp hosts: '$smtpCount | tee -a nmap_extractor_result.txt
-echo 'rpc hosts: '$rpcCount | tee -a nmap_extractor_result.txt
-echo 'smb hosts: '$smbCount | tee -a nmap_extractor_result.txt
-echo 'mssql hosts: '$mssqlCount | tee -a nmap_extractor_result.txt
-echo 'nfs hosts: '$nfsCount | tee -a nmap_extractor_result.txt
-echo 'sql hosts: '$sqlCount | tee -a nmap_extractor_result.txt
-echo 'rdp hosts: '$rdpCount | tee -a nmap_extractor_result.txt
-echo 'http services: '$httpCount | tee -a nmap_extractor_result.txt
-echo 'https services: '$httpsCount | tee -a nmap_extractor_result.txt
+echo '============='
+echo 'Stats'
+echo '============='
+echo 'ftp hosts: '$ftpCount
+echo 'ssh hosts: '$sshCount
+echo 'telnet hosts: '$telnetCount
+echo 'smtp hosts: '$smtpCount
+echo 'rpc hosts: '$rpcCount
+echo 'smb hosts: '$smbCount
+echo 'mssql hosts: '$mssqlCount
+echo 'nfs hosts: '$nfsCount
+echo 'sql hosts: '$sqlCount
+echo 'rdp hosts: '$rdpCount
+echo 'http services: '$httpCount
+echo 'https services: '$httpsCount
