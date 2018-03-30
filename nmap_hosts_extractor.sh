@@ -34,8 +34,8 @@ while read i; do
 	
 
 	for x in $(echo $ports); do
-		port="$(echo $x | cut -d '/' -f 1| cut -d '.' -f2)"
-		if [[ -z "$ip" ]] || [[ $x == *"HTTPAPI"* ]]; then
+		port="$(echo $service | cut -d '/' -f 1| cut -d '.' -f2)"
+		if [[ -z "$ip" ]] || [[ $service == *"HTTPAPI"* ]] || [[ $service == "tcpwrapped" ]]; then
 			continue
 		elif [[ $port == "21" ]]; then
 			echo $ip >> ftp_hosts.txt
@@ -70,10 +70,10 @@ while read i; do
 		elif [[ $port == "80" || $port == "8080" ]]; then
 			echo $ip:$port >> http_hosts.txt
 			httpCount+=1
-		elif [[ $port == "443" || $port == "8443" || $x == *"https"* || $x == *"ssl"* ]]; then
+		elif [[ $port == "443" || $port == "8443" || $service == *"https"* || $service == *"ssl"* ]]; then
 			echo $ip:$port >> https_hosts.txt
 			httpsCount+=1
-		elif [[ $x == *"http"* ]]; then
+		elif [[ $service == *"http"* ]]; then
 			echo $ip:$port >> http_hosts.txt
 			httpCount+=1
 		fi
@@ -82,19 +82,20 @@ while read i; do
 	done
 done< nmap_extractor_result
 
+rm nmap_extractor_result
 
-echo '============='
-echo 'Stats'
-echo '============='
-echo 'ftp hosts: '$ftpCount
-echo 'ssh hosts: '$sshCount
-echo 'telnet hosts: '$telnetCount
-echo 'smtp hosts: '$smtpCount
-echo 'rpc hosts: '$rpcCount
-echo 'smb hosts: '$smbCount
-echo 'mssql hosts: '$mssqlCount
-echo 'nfs hosts: '$nfsCount
-echo 'sql hosts: '$sqlCount
-echo 'rdp hosts: '$rdpCount
-echo 'http services: '$httpCount
-echo 'https services: '$httpsCount
+echo '=============' | tee -a nmap_extractor_result.txt
+echo 'Stats' | tee -a nmap_extractor_result.txt
+echo '=============' | tee -a nmap_extractor_result.txt
+echo 'ftp hosts: '$ftpCount | tee -a nmap_extractor_result.txt
+echo 'ssh hosts: '$sshCount | tee -a nmap_extractor_result.txt
+echo 'telnet hosts: '$telnetCount | tee -a nmap_extractor_result.txt
+echo 'smtp hosts: '$smtpCount | tee -a nmap_extractor_result.txt
+echo 'rpc hosts: '$rpcCount | tee -a nmap_extractor_result.txt
+echo 'smb hosts: '$smbCount | tee -a nmap_extractor_result.txt
+echo 'mssql hosts: '$mssqlCount | tee -a nmap_extractor_result.txt
+echo 'nfs hosts: '$nfsCount | tee -a nmap_extractor_result.txt
+echo 'sql hosts: '$sqlCount | tee -a nmap_extractor_result.txt
+echo 'rdp hosts: '$rdpCount | tee -a nmap_extractor_result.txt
+echo 'http services: '$httpCount | tee -a nmap_extractor_result.txt
+echo 'https services: '$httpsCount | tee -a nmap_extractor_result.txt
