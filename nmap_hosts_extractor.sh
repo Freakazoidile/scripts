@@ -3,7 +3,7 @@
 if [[ $# -eq 0 ]]; then
         echo 'Takes a gnmap file as input, and extracts common ports and puts each ip into separate files by common service name.'
         echo ''
-        echo '"./nmap_hosts_extractor.sh nmap.gnmap"'
+        echo '"smb_extractor.sh nmap.gnmap"'
         exit
 fi
 
@@ -34,8 +34,8 @@ while read i; do
 	
 
 	for x in $(echo $ports); do
-		port="$(echo $service | cut -d '/' -f 1| cut -d '.' -f2)"
-		if [[ -z "$ip" ]] || [[ $service == *"HTTPAPI"* ]] || [[ $service == "tcpwrapped" ]]; then
+		port="$(echo $x | cut -d '/' -f 1| cut -d '.' -f2)"
+		if [[ -z "$ip" ]] || [[ $x == *"HTTPAPI"* ]]; then
 			continue
 		elif [[ $port == "21" ]]; then
 			echo $ip >> ftp_hosts.txt
@@ -70,10 +70,10 @@ while read i; do
 		elif [[ $port == "80" || $port == "8080" ]]; then
 			echo $ip:$port >> http_hosts.txt
 			httpCount+=1
-		elif [[ $port == "443" || $port == "8443" || $service == *"https"* || $service == *"ssl"* ]]; then
+		elif [[ $port == "443" || $port == "8443" || $x == *"https"* || $x == *"ssl"* ]]; then
 			echo $ip:$port >> https_hosts.txt
 			httpsCount+=1
-		elif [[ $service == *"http"* ]]; then
+		elif [[ $x == *"http"* ]]; then
 			echo $ip:$port >> http_hosts.txt
 			httpCount+=1
 		fi
