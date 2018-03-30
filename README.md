@@ -43,13 +43,12 @@ Converts nmap.xml files to .csv for use in worksheet/excel.
 This script is originate by Didier Stevens, modified by Sumedt Jitpukdebodin then copied and modified by myself @Freakazoidile
 https://github.com/Freakazoidile/nmap-xml-to-csv
 
+### nmap_host_extractor.sh
+This script takes a gnmap scan as input and extracts IP's based on popular services and outputs IPs into a file based on the service name.
 
 ### qualys_combine.sh
 This script combines qualys .csv scans that are in the current working directory into a single csv. It strips the 'headers' that show the scan time, who ran the scan, etc.
 
-
-### web_extractor.sh
-Takes a gnmap file as input and extracts open ports: 80, 443, 8080, 8443 and any port with service containing "http", "https" or "ssl". It separates them into 2 files, http_extracted and https_extracted based on port (80 vs 443) or the mention of https, ssl or http.
 
 ### dirb.sh
 This script takes the output of web_extractor.sh as input (http_extracted.txt and https_extracted.txt) and runs dirb against each target. It is multithreaded and by default will run 5 processes of dirb. edit to your liking.
