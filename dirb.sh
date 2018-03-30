@@ -5,7 +5,7 @@
 # Todo: Revisit multithreading.
 #set -m #enable JOB control
 
-for i in $(cat http_extracted.txt); do
+for i in $(cat http_hosts.txt); do
 	#while [ `jobs | wc -l` -ge 5 ]; do
 	#	sleep 15
 	#done
@@ -16,7 +16,7 @@ done
 
 
 
-for i in $(cat https_extracted.txt); do
+for i in $(cat https_hosts.txt); do
 	#while [ `jobs | wc -l` -ge 5 ]; do
 	#	sleep 15
 	#done
