@@ -21,6 +21,7 @@ declare -i sql
 declare -i httpCount
 declare -i httpsCount
 declare -i rdpCount
+declare -i ldapCount
 
 
 
@@ -52,6 +53,9 @@ while read i; do
 		elif [[ $port == "111" ]]; then
 			echo $ip >> rpc_hosts.txt
 			rpcCount+=1
+		elif [[ $port == "389" ]]; then
+			echo $ip >> ldap_hosts.txt
+			ldapCount+=1
 		elif [[ $port == "445" || $port == "139" ]]; then
 			echo $ip >> smb_hosts.txt
 			smbCount+=1
@@ -89,6 +93,7 @@ echo 'ssh hosts: '$sshCount | tee -a nmap_extractor_result.txt
 echo 'telnet hosts: '$telnetCount | tee -a nmap_extractor_result.txt
 echo 'smtp hosts: '$smtpCount | tee -a nmap_extractor_result.txt
 echo 'rpc hosts: '$rpcCount | tee -a nmap_extractor_result.txt
+echo 'ldap hosts: '$ldapCount | tee -a nmap_extractor_result.txt
 echo 'smb hosts: '$smbCount | tee -a nmap_extractor_result.txt
 echo 'mssql hosts: '$mssqlCount | tee -a nmap_extractor_result.txt
 echo 'nfs hosts: '$nfsCount | tee -a nmap_extractor_result.txt
