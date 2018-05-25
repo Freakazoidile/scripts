@@ -32,10 +32,16 @@ while read i; do
 
 	ports="$(echo $i | cut -d ':' -f 3- | tr ',' '\n' | tr ' ' '.')"
 
-	
 
 	for service in $(echo $ports); do
 		port="$(echo $service | cut -d '/' -f 1| cut -d '.' -f2)"
+		portStatus="$(echo $service | cut -d '/' -f2)"
+
+		# If this specific port is cloed,
+		if [ $portStatus == "closed" ]; then
+			continue;
+		fi		
+
 		if [[ -z "$ip" ]] || [[ $service == *"HTTPAPI"* ]] || [[ $service == "tcpwrapped" ]]; then
 			continue
 		elif [[ $port == "21" ]]; then
@@ -103,3 +109,4 @@ echo 'http services: '$httpCount | tee -a nmap_extractor_result.txt
 echo 'https services: '$httpsCount | tee -a nmap_extractor_result.txt
 
 rm nmap_extractor_result
+
